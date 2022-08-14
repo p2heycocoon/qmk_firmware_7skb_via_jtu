@@ -6,6 +6,8 @@ qmk公式 https://github.com/qmk/qmk_firmware の `keyboards/salicylic_acid3/7sk
 JISキーボード設定のWIN機でそのまま使用できるように
 キーコードの変換処理を追加しました。
 
+他のファームウェアと同様、Pro Micro Web Updater などで書き込めます。
+
 ## via_jtuフォルダ内のファイル
 上記hexファイルのソースです。
 qmk_firmware の `keyboards/salicylic_acid3/7skb/keymaps` の直下に
@@ -22,7 +24,7 @@ QMK MSYSで `make salicylic_acid3/7skb:via_jtu` をすることにより
 - 上記の通り、JISキーボード設定のWIN機でそのまま使用できるようになります。
 - VIA対応です。
 - `KC_AT` など、シフト押下後を直接指定するキーコードにも対応しています。
-- 変換対象キー（＠や’など）を通常キーと同じ様に押しっぱなしで連続出力できます。
+- 変換対象キー（＠や’など）を押しっぱなしで、通常キーと同じ様に連続出力できます。
 - 変換対象キーを押したままで、放す前に他のキーを押しても問題ありません。
 
 ## 悪い面
