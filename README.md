@@ -1,36 +1,37 @@
-# ����͉���
-## hex�t�H���_����hex�t�@�C��
-7skb�A7sPro�p�̃t�@�[���E�F�A�ł��B
+# これは何か
+## hexフォルダ内のhexファイル
+7skb、7sPro用のファームウェアです。
 
-qmk���� https://github.com/qmk/qmk_firmware �� `keyboards/salicylic_acid3/7skb/keymaps/via` ���x�[�X�ɁA
-JIS�L�[�{�[�h�ݒ��WIN�@�ł��̂܂܎g�p�ł���悤��
-�L�[�R�[�h�̕ϊ�������ǉ����܂����B
+qmk公式 https://github.com/qmk/qmk_firmware の `keyboards/salicylic_acid3/7skb/keymaps/via` をベースに、
+JISキーボード設定のWIN機でそのまま使用できるように
+キーコードの変換処理を追加しました。
 
-## via_jtu�t�H���_���̃t�@�C��
-��Lhex�t�@�C���̃\�[�X�ł��B
-qmk_firmware �� `keyboards/salicylic_acid3/7skb/keymaps` �̒�����
-`via_jtu` ������悤�ɔz�u���āA
-QMK MSYS�� `make salicylic_acid3/7skb:via_jtu` �����邱�Ƃɂ��
-��Lhex�t�@�C�����쐬����܂��B
+## via_jtuフォルダ内のファイル
+上記hexファイルのソースです。
+qmk_firmware の `keyboards/salicylic_acid3/7skb/keymaps` の直下に
+`via_jtu` が来るように配置して、
+QMK MSYSで `make salicylic_acid3/7skb:via_jtu` をすることにより
+上記hexファイルが作成されます。
 
-`keymap.c` ���� `// �ȉ��ǉ�` ���� `// �ǉ������܂�` ���x�[�X����ǉ��������e�Ȃ̂ŁA
-���̃L�[�{�[�h�ɂ��������Ƃ�����Ί��p�ł��邩������܂���B
-
-
-# ����
-## �ǂ���
-- ��L�̒ʂ�AJIS�L�[�{�[�h�ݒ��WIN�@�ł��̂܂܎g�p�ł���悤�ɂȂ�܂��B
-- VIA�Ή��ł��B
-- �ϊ��ΏۃL�[�i����f�Ȃǁj��ʏ�L�[�Ɠ����l�ɉ������ςȂ��ŘA���ł��܂��B
-- �ϊ��ΏۃL�[���������܂܂ŁA�����O�ɑ��̃L�[�������Ă���肠��܂���B
-
-## ������
-- MAC�@�ȂǁAWIN�@�ȊO�łǂ��Ȃ邩�����؂ł��B
-- �ϊ��ΏۃL�[���V�t�g�L�[�Ƃ�������ɉ������܂܂ŁA�ϊ��ΏۃL�[������O�ɃV�t�g�L�[������ƕʂ̃L�[�R�[�h���o�͂����ꍇ������܂��B�i�Ȃ̂ŁA�������͂�v���O���~���O�Ȃǂɂ͖��Ȃ��Ǝv���܂����A�Q�[���ɂ͕s������������܂���B�j
+`keymap.c` 内の `// 以下追加` から `// 追加ここまで` がベースから追加した内容なので、
+他のキーボードにも同じことをすれば活用できるかもしれません。
 
 
+# 特徴
+## 良い面
+- 上記の通り、JISキーボード設定のWIN機でそのまま使用できるようになります。
+- VIA対応です。
+- `KC_AT` など、シフト押下後を直接指定するキーコードにも対応しています。
+- 変換対象キー（＠や’など）を通常キーと同じ様に押しっぱなしで連続出力できます。
+- 変換対象キーを押したままで、放す前に他のキーを押しても問題ありません。
 
-# �ӎ�
-7skb�A7sPro�̊J���҂ł���T���`���_�l��qmk���� https://github.com/qmk/qmk_firmware ���J���ꂽ `keymap.c` ���x�[�X�ɂ����Ă��������܂����B���肪�Ƃ��������܂��B
+## 悪い面
+- MAC機など、WIN機以外でどうなるか未検証です。
+- 変換対象キーをシフトキーといっしょに押したままで、変換対象キーを放す前にシフトキーを放すと別のキーコードが出力される場合があります。（なので、文字入力やプログラミングなどには問題ないと思いますが、ゲームには不向きかもしれません。）
 
-�ϊ�������koktoh�l�� https://github.com/koktoh/jtu_custom_keycodes ���Q�l�ɂ����Ă��������܂����B���肪�Ƃ��������܂��B
+
+
+# 謝辞
+7skb、7sProの開発者であるサリチル酸様がqmk公式 https://github.com/qmk/qmk_firmware に公開された `keymap.c` をベースにさせていただきました。ありがとうございます。
+
+変換処理はkoktoh様の https://github.com/koktoh/jtu_custom_keycodes を参考にさせていただきました。ありがとうございます。
