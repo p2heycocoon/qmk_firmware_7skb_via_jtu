@@ -12,10 +12,13 @@ enum layer_number {
 
 // 以下追加
 static bool gs_lshift = false;
+// static bool gs_modlshift = false;
 static bool gs_rshift = false;
+// static bool gs_modrshift = false;
 
 void proc_regist_keycode(keyrecord_t *record, uint16_t regist_keycode_ifshift, bool is_shift_ifshift, uint16_t regist_keycode, bool is_shift){
-    bool shift_now = gs_lshift || gs_rshift;
+    // bool shift_now = gs_lshift || gsdlshift || gs_rshift || gs_modrshift;
+    bool shift_now = gs_lshift  || gs_rshift;
 
     if (record->event.pressed) {
         //キーを押した場合
@@ -26,7 +29,9 @@ void proc_regist_keycode(keyrecord_t *record, uint16_t regist_keycode_ifshift, b
             if(!is_shift_ifshift){
                 //変換先キーがシフト無しの場合、シフトを解除する
                 if (gs_lshift) unregister_code(KC_LSFT);
+                // if (gs_modlshift) unregister_code(MOD_LSFT);
                 if (gs_rshift) unregister_code(KC_RSFT);
+                // if (gs_modrshift) unregister_code(MOD_RSFT);
             }
 
             //変換先キー押下
@@ -49,7 +54,9 @@ void proc_regist_keycode(keyrecord_t *record, uint16_t regist_keycode_ifshift, b
         if(shift_now && !is_shift_ifshift){
             //変換先キーがシフト無しの場合、シフトを解除する
             if (gs_lshift) unregister_code(KC_LSFT);
+            // if (gs_modlshift) unregister_code(MOD_LSFT);
             if (gs_rshift) unregister_code(KC_RSFT);
+            // if (gs_modrshift) unregister_code(MOD_RSFT);
         }
 
         //変換先キーを放す
@@ -58,7 +65,9 @@ void proc_regist_keycode(keyrecord_t *record, uint16_t regist_keycode_ifshift, b
         if(shift_now && !is_shift_ifshift){
             //シフトの状態を戻す
             if (gs_lshift) register_code(KC_LSFT);
+            // if (gs_modlshift) register_code(MOD_LSFT);
             if (gs_rshift) register_code(KC_RSFT);
+            // if (gs_modrshift) register_code(MOD_RSFT);
         }
 
         //----シフトしない側
@@ -83,19 +92,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) gs_lshift = true;
             else gs_lshift = false;
             return true;
+        // case MOD_LSFT:
+        //     if (record->event.pressed) gs_modlshift = true;
+        //     else gs_modlshift = false;
+        //     return true;
         case KC_RSFT:
             if (record->event.pressed) gs_rshift = true;
             else gs_rshift = false;
             return true;
+        // case MOD_RSFT:
+        //     if (record->event.pressed) gs_modrshift = true;
+        //     else gs_modrshift = false;
+        //     return true;
     }
 
     //実際のシフト押下と今のレジスト状態が異なる場合は実際の押下に合わせる
     bool is_reg_lshift = keyboard_report->mods & MOD_BIT(KC_LSFT);
-    bool is_reg_rshift = keyboard_report->mods & MOD_BIT(KC_RSFT);
     if(!is_reg_lshift && gs_lshift)register_code(KC_LSFT);
     if(is_reg_lshift && !gs_lshift)unregister_code(KC_LSFT);
+
+    // bool is_reg_modlshift = keyboard_report->mods & MOD_BIT(MOD_LSFT);
+    // if(!is_reg_modlshift && gs_modlshift)register_code(MOD_LSFT);
+    // if(is_reg_modlshift && !gs_modlshift)unregister_code(MOD_LSFT);
+
+    bool is_reg_rshift = keyboard_report->mods & MOD_BIT(KC_RSFT);
     if(!is_reg_rshift && gs_rshift)register_code(KC_RSFT);
     if(is_reg_rshift && !gs_rshift)unregister_code(KC_RSFT);
+
+    // bool is_reg_modrshift = keyboard_report->mods & MOD_BIT(MOD_RSFT);
+    // if(!is_reg_modrshift && gs_modrshift)register_code(MOD_RSFT);
+    // if(is_reg_modrshift && !gs_modrshift)unregister_code(MOD_RSFT);
 
     //JISと異なるキーそれぞれの分岐
     //２，３番目の引数がシフトが押下されている場合の変換先
@@ -188,6 +214,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case KC_DQUO:
             proc_regist_keycode(record, KC_2, true, KC_2, true);
+            return false;
+        case KC_PEQL:
+            proc_regist_keycode(record, KC_MINS, true, KC_MINS, true);
+            return false;
+        case KC_PCMM:
+            proc_regist_keycode(record, KC_COMM, false, KC_COMM, false);
             return false;
     }
     return true;
